@@ -6,15 +6,21 @@ async def fetch(session, url):
     async with session.get(url) as response:
         return await response.text()
 
-async def main():
+async def main(link):
     async with aiohttp.ClientSession() as session:
-        html = await fetch(session, 'https://sinoptik.ua/pohoda/dolyna')
+        html = await fetch(session, link)
         soup = BeautifulSoup(html, "html.parser")
-        first_day = soup.find(class_="+Ncy59Ya")
-        first_day_p = first_day.find_all('p')
-        for p in reversed(first_day_p):
-            print(p.get_text())
-            break
+        def temp():
+            temp = soup.find_all(class_="+Ncy59Ya")
+            first_day = []
+            for i in temp:
+                first_day.append(i.get_text())
+                if len(first_day) == 2:
+                    break
+            print(first_day)
+        temp()
+
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+loop.run_until_complete(main('https://sinoptik.ua/pohoda/dolyna'))
+loop.run_until_complete(main('https://sinoptik.ua/pohoda/moskva'))
