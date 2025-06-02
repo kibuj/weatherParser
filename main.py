@@ -17,10 +17,6 @@ async def main(link):
                 first_day.append(i.get_text())
                 if len(first_day) == 2:
                     break
+            return first_day
             print(first_day)
-        temp()
-
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main('https://sinoptik.ua/pohoda/dolyna'))
-loop.run_until_complete(main('https://sinoptik.ua/pohoda/moskva'))
+        return temp()
